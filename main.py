@@ -3,9 +3,7 @@ import validators
 import json
 from pathlib import Path
 from app.manager import ResearchManager
-from pydantic import BaseModel, Field
 from dotenv import load_dotenv, find_dotenv
-from app.schemas.competitor import Competitor, CompetitorAnalysisResponse
 from app.schemas.request import CompetitorAnalysisRequest
 from agents import set_default_openai_key
 import os
@@ -14,7 +12,7 @@ load_dotenv(find_dotenv('.env'))
 set_default_openai_key(os.getenv("KEY_OPENAI"))
 
 async def main():
-    print("Welcome to the Competitor Analysis Tool!")
+    print("Welcome to the Company Analysis Tool!")
     
     while True:
         url = input("\nPlease enter the website URL to analyze: ").strip()
@@ -38,7 +36,7 @@ async def main():
         
         # Generate filename based on domain
         domain = url.replace("https://", "").replace("http://", "").replace("/", "_").replace(".", "_")
-        output_file = output_dir / f"competitor_analysis_{domain}.json"
+        output_file = output_dir / f"company_analysis_{domain}.json"
         
         # Save report to JSON file
         with open(output_file, "w", encoding="utf-8") as f:
