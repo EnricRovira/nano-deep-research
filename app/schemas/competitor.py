@@ -48,7 +48,9 @@ class PricingPlan(BaseModel):
 
 
 class Pricing(BaseModel):
-    model: PricingModel
+    model: PricingModel = Field(
+        description="The pricing model of the product. Use the one-time purchase model for ecommerce platforms."
+    )
     plans: Optional[List[PricingPlan]] = None
     discounts: Optional[List[str]] = None
 
@@ -84,13 +86,13 @@ class SwotAnalysis(BaseModel):
 
 
 class CompetitorBase(BaseModel):
-    name: str
-    website: str
-    description: Optional[str] = None
-    score_affinity: Optional[float] = Field(None, ge=0, le=10)
-    product: Optional[Product] = None
-    market: Optional[Market] = None
-    swot_analysis: Optional[SwotAnalysis] = None
+    name: str = Field(..., description="The name of the competitor.")
+    website: str = Field(..., description="The website of the competitor.")
+    description: str = Field(..., description="A short description of the competitor.")
+    score_affinity: None | int = Field(..., description="A score between 10 and 100 indicating the affinity of the competitor to the user input query data.")
+    product: Optional[Product] = Field(..., description="Details about the product of the competitor.")
+    market: Optional[Market] = Field(..., description="Details about the market of the competitor.")
+    swot_analysis: Optional[SwotAnalysis] = Field(..., description="Details about the SWOT analysis of the competitor.")
 
 
 class CompetitorCreate(CompetitorBase):
@@ -106,8 +108,14 @@ class CompetitorInDB(CompetitorBase):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class Competitor(CompetitorInDB):
-    pass 
+    pass
+
+class CompetitorAnalysisResponse(BaseModel):
+    self_analysis: Competitor = Field(
+        ...,
+        description="The analysis of the original query website."
+    )

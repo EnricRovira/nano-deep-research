@@ -1,6 +1,6 @@
-from app.api.schemas.competitor import Competitor, CompetitorBase, CompetitorCreate, CompetitorUpdate, SocialMedia
-from app.api.schemas.report import Report, ReportBase, ReportCreate, ReportUpdate, Insight
-from app.api.schemas.common import PaginationParams, PaginatedResponse, SingleResponse
+from app.schemas.competitor import Competitor, CompetitorBase, CompetitorCreate, CompetitorUpdate, SocialMedia
+from app.schemas.report import Report, ReportBase, ReportCreate, ReportUpdate, Insight
+from app.schemas.common import PaginationParams, PaginatedResponse, SingleResponse
 
 __all__ = [
     'Competitor',
